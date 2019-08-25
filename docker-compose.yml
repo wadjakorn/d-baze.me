@@ -23,6 +23,7 @@ services:
       - '${MYSQL_EXPOSE_PORT}:3306'
     volumes:
       - './database:/var/lib/mysql'
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
     logging:
       driver: json-file
       options: { max-size: '200k', max-file: '1' }
@@ -44,6 +45,24 @@ services:
     logging:
       driver: json-file
       options: { max-size: '200k', max-file: '1' }
+  shop:
+    image: wordpress:5-fpm
+    container_name: ${APP_NAME}_shop
+    networks:
+      - frontend
+      - backend
+    restart: always
+    environment:
+      - TZ=${TZ}
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_NAME=${MYSQL_SHOP_DATABASE}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${SHOP_STORAGE}:/var/www/html
+    logging:
+      driver: json-file
+      options: { max-size: '200k', max-file: '1' }
   nginx:
     image: nginx:alpine
     container_name: ${APP_NAME}_nginx
@@ -59,6 +78,7 @@ services:
       - ./certs:/opt/certs:ro
       - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ${WORDPRESS_STORAGE}:/var/www/html:ro
+      - ${SHOP_STORAGE}:/var/www/shop:ro
     logging:
       driver: json-file
       options: { max-size: '200k', max-file: '1' }
