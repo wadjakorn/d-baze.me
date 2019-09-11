@@ -80,6 +80,7 @@ services:
       - ${WORDPRESS_STORAGE}:/var/www/html/wordpress
       - ${SHOP_STORAGE}:/var/www/html/shop
       - ${GOOGLE_AUTH_STORAGE}:/var/www/html/googleAuth101
+      - ${LINE_API}:/var/www/html/line
     logging:
       driver: json-file
       options: { max-size: "200k", max-file: "1" }
