@@ -81,6 +81,7 @@ services:
       - ${SHOP_STORAGE}:/var/www/html/shop
       - ${GOOGLE_AUTH_STORAGE}:/var/www/html/googleAuth101
       - ${GAME01_STORAGE}:/var/www/html/game01
+      - ${NOBI_ORDER_STORAGE}:/var/www/html/nobi-order
     logging:
       driver: json-file
       options: { max-size: "200k", max-file: "1" }
