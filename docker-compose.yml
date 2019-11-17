@@ -20,7 +20,7 @@ services:
       - '--innodb-log-buffer-size=32M'
       - '--innodb-file-per-table=1'
     ports:
-      - '${MYSQL_EXPOSE_PORT}:3306'
+      - '127.0.0.1:${MYSQL_EXPOSE_PORT}:3306'
     volumes:
       - './database:/var/lib/mysql'
       - './init.sql:/docker-entrypoint-initdb.d/init.sql'
