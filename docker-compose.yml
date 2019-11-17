@@ -1,68 +1,50 @@
-version: "3.5"
+version: '3.5'
 services:
   mariadb:
     image: mariadb:latest
-    container_name: ${APP_NAME}_mariadb
+    container_name: ${APP_NAME}_db
     networks:
       - backend
     restart: always
     environment:
       - TZ=${TZ}
-      - MYSQL_USER=${MYSQL_USER}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     command:
-      - "--character-set-server=utf8mb4"
-      - "--collation-server=utf8mb4_unicode_ci"
-      - "--max-connections=512"
-      - "--innodb-buffer-pool-size=256M"
-      - "--innodb-log-buffer-size=32M"
-      - "--innodb-file-per-table=1"
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+      - '--max-connections=512'
+      - '--innodb-buffer-pool-size=256M'
+      - '--innodb-log-buffer-size=32M'
+      - '--innodb-file-per-table=1'
     ports:
-      - "${MYSQL_EXPOSE_PORT}:3306"
+      - '${MYSQL_EXPOSE_PORT}:3306'
     volumes:
-      - "./database:/var/lib/mysql"
-      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - './database:/var/lib/mysql'
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
     logging:
       driver: json-file
-      options: { max-size: "200k", max-file: "1" }
+      options: { max-size: '200k', max-file: '1' }
   wordpress:
-    image: wordpress:5-fpm
-    container_name: ${APP_NAME}_wordpress
+    image: wordpress:5.3.0-fpm
+    container_name: ${APP_NAME}_website
     networks:
       - frontend
       - backend
     restart: always
     environment:
       - TZ=${TZ}
-      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_HOST=mariadb:${MYSQL_EXPOSE_PORT}
       - WORDPRESS_DB_USER=${MYSQL_USER}
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
-      - WORDPRESS_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ${WORDPRESS_STORAGE}:/var/www/html/wordpress
+      - ./storage/wordpress:/var/www/html/wordpress
     logging:
       driver: json-file
-      options: { max-size: "200k", max-file: "1" }
-  shop:
-    image: wordpress:5-fpm
-    container_name: ${APP_NAME}_shop
-    networks:
-      - frontend
-      - backend
-    restart: always
-    environment:
-      - TZ=${TZ}
-      - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=${MYSQL_USER}
-      - WORDPRESS_DB_NAME=${MYSQL_SHOP_DATABASE}
-      - WORDPRESS_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - ${SHOP_STORAGE}:/var/www/html/shop
-    logging:
-      driver: json-file
-      options: { max-size: "200k", max-file: "1" }
+      options: { max-size: '200k', max-file: '1' }
   nginx:
     image: nginx:alpine
     container_name: ${APP_NAME}_nginx
@@ -72,19 +54,16 @@ services:
     environment:
       - TZ=${TZ}
     ports:
-      - "${NGINX_EXPORT_HTTP_PORT}:80"
-      - "${NGINX_EXPORT_HTTPS_PORT}:443"
+      - '${NGINX_EXPORT_HTTP_PORT}:80'
     volumes:
       - ./certs:/opt/certs:ro
-      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ${WORDPRESS_STORAGE}:/var/www/html/wordpress
-      - ${SHOP_STORAGE}:/var/www/html/shop
-      - ${GOOGLE_AUTH_STORAGE}:/var/www/html/googleAuth101
-      - ${GAME01_STORAGE}:/var/www/html/game01
-      - ${NOBI_ORDER_STORAGE}:/var/www/html/nobi-order
+      - ./config/d-baze.me.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./config/nobi.conf:/etc/nginx/conf.d/nobi.conf:ro
+      - ./storage/wordpress:/var/www/html/wordpress:delegated
+      - ./storage/nobi:/var/www/html/nobi
     logging:
       driver: json-file
-      options: { max-size: "200k", max-file: "1" }
+      options: { max-size: '200k', max-file: '1' }
 
 networks:
   frontend:

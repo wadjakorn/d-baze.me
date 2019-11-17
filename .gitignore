@@ -1,6 +1,3 @@
 database
-storage
-shop
-googleAuth101
-# line
+storage/wordpress
 .env
