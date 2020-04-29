@@ -61,6 +61,7 @@ services:
       - ./config/nobi.conf:/etc/nginx/conf.d/nobi.conf:ro
       - ./storage/wordpress:/var/www/html/wordpress:delegated
       - ./storage/nobi:/var/www/html/nobi
+      - ./storage/tea2one:/var/www/html/tea2one
     logging:
       driver: json-file
       options: { max-size: '200k', max-file: '1' }
