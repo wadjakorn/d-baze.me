@@ -38,7 +38,7 @@ services:
       - WORDPRESS_DB_NAME=dbaze
       - WORDPRESS_DB_PASSWORD=aa111111
     ports:
-      - '8080'
+      - '7000'
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./storage/d-baze:/var/www/html/d-baze
@@ -60,7 +60,7 @@ services:
       - WORDPRESS_DB_NAME=tea2one
       - WORDPRESS_DB_PASSWORD=aa111111
     ports:
-      - '8081'
+      - '8000'
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./storage/tea2one:/var/www/html/tea2one
