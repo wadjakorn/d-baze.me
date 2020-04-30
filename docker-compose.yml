@@ -44,6 +44,7 @@ services:
       - ./storage/d-baze:/var/www/html/d-baze
     depends_on:
       - mariadb
+    
 
   tea2one:
     image: wordpress:latest
