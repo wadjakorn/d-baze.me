@@ -79,8 +79,9 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - ./cf_certs:/opt/certs:ro
+      # - ./cf_certs:/opt/certs:ro
       - ./cf_certs_tea2one:/opt/certs_tea2one:ro
+      - ./cf_certs_d-baze:/opt/certs_d-baze:ro
       - ./config/d-baze.me.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - dbaze
