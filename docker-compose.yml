@@ -80,12 +80,12 @@ services:
       - '443:443'
     volumes:
       - ./cf_certs:/opt/certs:ro
+      - ./cf_certs_tea2one:/opt/certs_tea2one:ro
       - ./config/d-baze.me.conf:/etc/nginx/conf.d/default.conf:ro
-      # - ./config/tea2one.conf:/etc/nginx/conf.d/tea2one.conf:ro
       # - ./config/nobi.conf:/etc/nginx/conf.d/nobi.conf:ro
-      - ./storage/d-baze:/var/www/html/d-baze:ro
+      # - ./storage/d-baze:/var/www/html/d-baze:ro
       # - ./storage/nobi:/var/www/html/nobi
-      - ./storage/tea2one:/var/www/html/tea2one:ro
+      # - ./storage/tea2one:/var/www/html/tea2one:ro
     depends_on:
       - dbaze
       - tea2one
