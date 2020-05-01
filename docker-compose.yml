@@ -77,6 +77,7 @@ services:
       - TZ=Asia/Bangkok
     ports:
       - '80:80'
+      - '443:443'
     volumes:
       - ./cf_certs:/opt/certs:ro
       - ./config/d-baze.me.conf:/etc/nginx/conf.d/default.conf:ro
