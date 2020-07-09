@@ -78,6 +78,7 @@ services:
       - ./cf_certs_tea2one:/opt/certs_tea2one:ro
       - ./cf_certs_d-baze:/opt/certs_d-baze:ro
       - ./config/:/etc/nginx/conf.d/
+      - ./storage/support-chatz/:/var/www/html/support-chatz:ro
     depends_on:
       - dbaze
       - tea2one
