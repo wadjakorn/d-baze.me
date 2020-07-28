@@ -79,6 +79,7 @@ services:
       - ./cf_certs_d-baze:/opt/certs_d-baze:ro
       - ./config/:/etc/nginx/conf.d/
       - ./storage/chatz:/var/www/html/chatz:ro
+      - ./storage/nobi:/var/www/html/nobi:ro
     depends_on:
       - dbaze
       - tea2one
