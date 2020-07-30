@@ -2,6 +2,7 @@ name: deploynaja
 on: push
 jobs:
   dockerdeploy:
+    runs-on: ubuntu-latest
     steps:
       - name: down
         run: cd compose/d-baze.me
