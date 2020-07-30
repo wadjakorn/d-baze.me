@@ -1,8 +1,7 @@
 name: deploynaja
-on:
-  push:
-    branches:
-      - master
+on: push
+jobs:
+  dockerdeploy:
     steps:
       - name: down
         run: cd compose/d-baze.me
