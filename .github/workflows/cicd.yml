@@ -4,9 +4,13 @@ jobs:
   dockerdeploy:
     runs-on: ubuntu-latest
     steps:
-      - name: down
-        run: cd /home/system/compose/d-baze.me
-      - name: down
-        run: docker-compose down --remove-orphans
-      - name: upd
-        run: docker-compose up -d
+      - name: path
+        run: pwd
+      - name: list
+        run: ls -la
+      # - name: down
+      #   run: cd /home/system/compose/d-baze.me
+      # - name: down
+      #   run: docker-compose down --remove-orphans
+      # - name: upd
+      #   run: docker-compose up -d
