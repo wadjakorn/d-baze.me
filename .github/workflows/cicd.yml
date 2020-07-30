@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: down
-        run: cd compose/d-baze.me
+        run: cd /home/system/compose/d-baze.me
       - name: down
         run: docker-compose down --remove-orphans
       - name: upd
