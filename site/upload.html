@@ -14,6 +14,7 @@
     form.addEventListener('submit',  (e) => {
       e.preventDefault()
       const file = document.querySelector('#file').files[0]
+      console.log(file)
       const reader = new FileReader()
       reader.onload = handleFileLoad;
       reader.readAsText(file)
@@ -34,7 +35,12 @@
 
     function handleFileLoad(file) {
       alert(navigator.canShare(file))
-      navigator.share(file)
+      navigator.share({
+        text: 'some_text',
+        files: [file],
+        title: 'some_title',
+        url: 'some_url'
+      })
         .then(() =>
         alert('success')
         )
