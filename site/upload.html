@@ -1,0 +1,57 @@
+<html>
+
+<body>
+
+  Hello
+  <button onclick="instagram()">Instagram</button>
+  <button onclick="tmn()">TMN</button>
+  <form id="form" action="#" >
+    <input id="file" type="file" />
+    <button type="submit">share</button>
+  </form>
+  <script>
+    const form = document.getElementById('form');
+    // form.addEventListener('submit',  (e) => {
+    //   e.preventDefault()
+    //   const file = document.querySelector('#file').files[0]
+    // });
+
+    function init() {
+      document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    }
+
+    function handleFileSelect(event) {
+      const reader = new FileReader()
+      reader.onload = handleFileLoad;
+      reader.readAsText(event.target.files[0])
+    }
+
+    function handleFileLoad(event) {
+      const data = event.target.result
+      console.log(data);
+      navigator.share(data)
+        .then(() =>
+          console.log('success')
+        )
+        .catch((e) =>
+          console.log('failed')
+        )
+      // document.getElementById('fileContent').textContent = event.target.result;
+    }
+   
+    init();
+
+    instagram = () => {
+      console.log('clicked')
+      const url =
+      "intent://instagram.com/#Intent;scheme=https;package=com.instagram.android;end";
+      window.location.replace(url);
+    }
+
+    tmn = () => {
+      window.location.replace('ascendmoney://wallet.truemoney.co.th/app/660000000022?type=content&amp;method=%7B%22url%22:%22https://www.truemoney.com/a/lotus-lucky-bag/%22,%22title_th%22:%22RET_LTS%22,%22title_en%22:%22RET_LTS%22%7D"')
+    }
+  </script>
+</body>
+
+</html>
