@@ -17,6 +17,9 @@
     // });
 
     function init() {
+      if (!navigator.share) {
+        alert('not support share')
+      }
       document.getElementById('file').addEventListener('change', handleFileSelect, false);
     }
 
@@ -28,13 +31,14 @@
 
     function handleFileLoad(event) {
       const data = event.target.result
-      console.log(data);
+      // console.log(data);
+      alert(navigator.canShare(data))
       navigator.share(data)
         .then(() =>
-          console.log('success')
+        alert('success')
         )
         .catch((e) =>
-          console.log('failed')
+        alert('failed')
         )
       // document.getElementById('fileContent').textContent = event.target.result;
     }
