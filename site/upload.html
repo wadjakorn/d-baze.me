@@ -11,29 +11,30 @@
   </form>
   <script>
     const form = document.getElementById('form');
-    // form.addEventListener('submit',  (e) => {
-    //   e.preventDefault()
-    //   const file = document.querySelector('#file').files[0]
-    // });
+    form.addEventListener('submit',  (e) => {
+      e.preventDefault()
+      const file = document.querySelector('#file').files[0]
+      const reader = new FileReader()
+      reader.onload = handleFileLoad;
+      reader.readAsText(file)
+    });
 
     function init() {
       if (!navigator.share) {
         alert('not support share')
       }
-      document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    //   document.getElementById('file').addEventListener('change', handleFileSelect, false);
     }
 
-    function handleFileSelect(event) {
-      const reader = new FileReader()
-      reader.onload = handleFileLoad;
-      reader.readAsText(event.target.files[0])
-    }
+    // function handleFileSelect(event) {
+    //   const reader = new FileReader()
+    //   reader.onload = handleFileLoad;
+    //   reader.readAsText(event.target.files[0])
+    // }
 
-    function handleFileLoad(event) {
-      const data = event.target.result
-      // console.log(data);
-      alert(navigator.canShare(data))
-      navigator.share(data)
+    function handleFileLoad(file) {
+      alert(navigator.canShare(file))
+      navigator.share(file)
         .then(() =>
         alert('success')
         )
