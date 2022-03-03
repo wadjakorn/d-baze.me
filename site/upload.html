@@ -34,13 +34,14 @@
     // }
 
     function handleFileLoad(file) {
-      alert(navigator.canShare(file))
-      navigator.share({
+    const data = {
         text: 'some_text',
         files: [file],
         title: 'some_title',
         url: 'some_url'
-      })
+      }
+      alert(navigator.canShare(data))
+      navigator.share()
         .then(() =>
         alert('success')
         )
