@@ -34,21 +34,21 @@
     // }
 
     function handleFileLoad(file) {
-    const data = {
-        text: 'some_text',
-        files: [file],
-        title: 'some_title',
-        url: 'some_url'
-      }
-      alert(navigator.canShare(data))
-      navigator.share()
-        .then(() =>
-        alert('success')
-        )
-        .catch((e) =>
-        alert('failed')
-        )
-      // document.getElementById('fileContent').textContent = event.target.result;
+        const data = {
+            text: 'some_text',
+            // files: [file],
+            title: 'some_title',
+            url: 'some_url'
+        }
+        alert(navigator.canShare(data))
+        navigator.share(data)
+            .then(() =>
+            alert('success')
+            )
+            .catch((e) =>
+            alert('failed')
+            )
+        // document.getElementById('fileContent').textContent = event.target.result;
     }
    
     init();
