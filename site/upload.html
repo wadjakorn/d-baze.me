@@ -5,6 +5,7 @@
   Hello
   <button onclick="instagram()">Instagram</button>
   <button onclick="tmn()">TMN</button>
+  <button onclick="vibrate()">vibrate</button>
   <form id="form" action="#" >
     <input id="file" type="file" />
     <button type="submit">share</button>
@@ -62,6 +63,10 @@
 
     tmn = () => {
       window.location.replace('ascendmoney://wallet.truemoney.co.th/app/660000000022?type=content&amp;method=%7B%22url%22:%22https://www.truemoney.com/a/lotus-lucky-bag/%22,%22title_th%22:%22RET_LTS%22,%22title_en%22:%22RET_LTS%22%7D"')
+    }
+
+    vibrate = () => {
+      navigator.vibrate()
     }
   </script>
 </body>
