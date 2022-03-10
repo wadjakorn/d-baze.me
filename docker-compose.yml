@@ -18,5 +18,7 @@ services:
       - ./projects/:/home/coder/project
     environment:
       - PASSWORD=aa111111
+    ports:
+      - 0.0.0.0:8888:8080
 
 
