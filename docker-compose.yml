@@ -12,4 +12,11 @@ services:
     volumes:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
+  code-server:
+    image: codercom/code-server:latest
+    volumes:
+      - ./projects/:/home/coder/project
+    environment:
+      - PASSWORD=aa111111
+
 
