@@ -32,9 +32,11 @@ services:
       - PGID=1000
       - PASSWORD=aa111111
     volumes:
-      - ./projects/:/home/coder/project:rw
+      - ./projects/:/home/coder/project
     ports:
       - 8443:8443
     restart: unless-stopped
+    users:
+      - "$(id -u):$(id -g)"
 
 
