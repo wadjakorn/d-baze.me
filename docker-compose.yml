@@ -13,29 +13,28 @@ services:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
 
+  # code-server:
+  #   image: codercom/code-server:latest
+  #   volumes:
+  #     - ./projects/:/home/coder/project:rw
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - PASSWORD=aa111111
+  #   ports:
+  #     - 8443:8080
+
   code-server:
-    image: codercom/code-server:latest
-    volumes:
-      - ./projects/:/home/coder/project:rw
+    image: lscr.io/linuxserver/code-server
+    container_name: code-server
     environment:
       - PUID=1000
       - PGID=1000
       - PASSWORD=aa111111
+    volumes:
+      - ./projects/:/home/coder/project:rw
     ports:
-      - 8443:8080
-
-  # code-server:
-  #   image: lscr.io/linuxserver/code-server
-  #   container_name: code-server
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/London
-  #     - PASSWORD=aa111111
-  #   volumes:
-  #     - ./projects/:/home/coder/project:rw
-  #   ports:
-  #     - 8443:8443
-  #   restart: unless-stopped
+      - 8443:8443
+    restart: unless-stopped
 
 
