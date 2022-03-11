@@ -16,7 +16,7 @@ services:
   code-server:
     image: codercom/code-server:latest
     volumes:
-      - ./projects/:/home/coder/project
+      - ./projects/:/home/coder/project:rw
     environment:
       - PASSWORD=aa111111
 
