@@ -37,16 +37,20 @@ services:
     restart: always
     ports:
       - '0.0.0.0:6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass Password
+    command: redis-server --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
     volumes: 
       - shortcache:/data
 
   shorturl:
     image: docker-short-url
     container_name: shorturl
+    environment:
+      - REDIS_PASSWORD=$REDIS_PASSWORD
     restart: always
     ports:
       - '0.0.0.0:9808:9808'
+    depends_on:
+      - shortcache
 
 volumes:
   shortcache:
