@@ -13,17 +13,6 @@ services:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
 
-  # code-server:
-  #   image: codercom/code-server:latest
-  #   volumes:
-  #     - ./projects/:/home/coder/project:rw
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - PASSWORD=aa111111
-  #   ports:
-  #     - 8443:8080
-
   code-server:
     image: lscr.io/linuxserver/code-server
     container_name: code-server
@@ -37,5 +26,23 @@ services:
       - 8443:8443
     restart: unless-stopped
     user: ${CURRENT_UID:?"Please run as follows 'CURRENT_UID=$(id -u):$(id -g) docker-compose up'"}
+
+  shortcache:
+    container_name: shortcache
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '0.0.0.0:6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass Password
+    volumes: 
+      - cache:/data
+
+  shorturl:
+    image: docker-short-url
+    container_name: shorturl
+    restart: always
+    ports:
+      - '0.0.0.0:9808:9808'
+
 
 
