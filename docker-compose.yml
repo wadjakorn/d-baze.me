@@ -48,5 +48,6 @@ services:
     ports:
       - '0.0.0.0:9808:9808'
 
-
-
+volumes:
+  shortcache:
+    driver: local
