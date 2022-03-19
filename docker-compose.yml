@@ -12,6 +12,10 @@ services:
     volumes:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
+    depends_on:
+      - shortcache
+      - shorturl
+      - code-server
 
   code-server:
     image: lscr.io/linuxserver/code-server
@@ -35,7 +39,7 @@ services:
       - '0.0.0.0:6379:6379'
     command: redis-server --save 20 1 --loglevel warning --requirepass Password
     volumes: 
-      - cache:/data
+      - shortcache:/data
 
   shorturl:
     image: docker-short-url
