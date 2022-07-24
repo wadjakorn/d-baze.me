@@ -52,6 +52,55 @@ services:
     depends_on:
       - shortcache
 
+
+  ksadb:
+    image: mariadb:latest
+    container_name: ksadb
+    networks:
+      - dbazeinfrab
+    restart: always
+    environment:
+      - TZ=Asia/Bangkok
+      - MYSQL_DATABASE=ksadb
+      - MYSQL_ROOT_PASSWORD=aa111111
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+      - '--max-connections=512'
+      - '--innodb-buffer-pool-size=256M'
+      - '--innodb-log-buffer-size=32M'
+      - '--innodb-file-per-table=1'
+    ports:
+      - '3306:3306'
+    volumes:
+      - './database:/var/lib/mysql'
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+
+  ksawp:
+    image: wordpress:latest
+    container_name: ksawp
+    networks:
+      - dbazeinfraf
+      - dbazeinfrab
+    restart: always
+    environment:
+      - TZ=Asia/Bangkok
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_NAME=ksadb
+      - WORDPRESS_DB_PASSWORD=aa111111
+    volumes:
+      - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+      - ./storage/d-baze:/var/www/html/d-baze:ro
+    depends_on:
+      - mariadb
+
 volumes:
   shortcache:
     driver: local
+
+networks:
+  dbazeinfrab:
+    name: dbazeinfrab
+  dbazeinfraf:
+    name: dbazeinfraf
