@@ -93,7 +93,7 @@ services:
       - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./storage/d-baze:/var/www/html/d-baze:ro
     depends_on:
-      - mariadb
+      - ksadb
 
 volumes:
   shortcache:
