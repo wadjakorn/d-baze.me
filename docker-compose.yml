@@ -31,26 +31,26 @@ services:
   #   restart: unless-stopped
     # user: ${CURRENT_UID:?"Please run as follows 'CURRENT_UID=$(id -u):$(id -g) docker-compose up'"}
 
-  shortcache:
-    container_name: shortcache
-    image: redis:6.2-alpine
-    restart: always
-    ports:
-      - '0.0.0.0:6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
-    volumes: 
-      - shortcache:/data
+  # shortcache:
+  #   container_name: shortcache
+  #   image: redis:6.2-alpine
+  #   restart: always
+  #   ports:
+  #     - '0.0.0.0:6379:6379'
+  #   command: redis-server --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
+  #   volumes: 
+  #     - shortcache:/data
 
-  shorturl:
-    image: docker-short-url
-    container_name: shorturl
-    environment:
-      - REDIS_PASSWORD=$REDIS_PASSWORD
-    restart: always
-    ports:
-      - '0.0.0.0:9808:9808'
-    depends_on:
-      - shortcache
+  # shorturl:
+  #   image: docker-short-url
+  #   container_name: shorturl
+  #   environment:
+  #     - REDIS_PASSWORD=$REDIS_PASSWORD
+  #   restart: always
+  #   ports:
+  #     - '0.0.0.0:9808:9808'
+  #   depends_on:
+  #     - shortcache
 
 
   ksadb:
