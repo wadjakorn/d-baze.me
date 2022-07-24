@@ -45,6 +45,6 @@ services:
       - '8443:443'
     volumes:
       - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
-      - ./storage/d-baze:/var/www/html/d-baze:ro
+      - ./storage/ksawp:/var/www/html
     depends_on:
       - ksadb
