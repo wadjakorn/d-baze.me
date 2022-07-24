@@ -54,7 +54,7 @@ services:
 
 
   ksadb:
-    image: mariadb:latest
+    image: mariadb:10.7
     container_name: ksadb
     networks:
       - dbazeinfrab
@@ -63,6 +63,9 @@ services:
       - TZ=Asia/Bangkok
       - MYSQL_DATABASE=ksadb
       - MYSQL_ROOT_PASSWORD=aa111111
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
     ports:
       - '3306:3306'
     volumes:
