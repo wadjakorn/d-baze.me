@@ -12,9 +12,6 @@ services:
     volumes:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
-    depends_on:
-      - shortcache
-      - shorturl
       # - code-server
 
   # code-server:
