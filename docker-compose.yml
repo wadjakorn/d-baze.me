@@ -66,10 +66,6 @@ services:
     command:
       - '--character-set-server=utf8mb4'
       - '--collation-server=utf8mb4_unicode_ci'
-      - '--max-connections=512'
-      - '--innodb-buffer-pool-size=256M'
-      - '--innodb-log-buffer-size=32M'
-      - '--innodb-file-per-table=1'
     ports:
       - '3306:3306'
     volumes:
@@ -89,6 +85,9 @@ services:
       - WORDPRESS_DB_USER=root
       - WORDPRESS_DB_NAME=ksadb
       - WORDPRESS_DB_PASSWORD=aa111111
+    ports:
+      - '8080:80'
+      - '8443:443'
     volumes:
       - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./storage/d-baze:/var/www/html/d-baze:ro
