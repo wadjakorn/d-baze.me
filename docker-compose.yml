@@ -12,7 +12,7 @@ services:
     volumes:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
-      
+
   ksadb:
     image: mariadb:10.7
     container_name: ksadb
@@ -48,7 +48,3 @@ services:
       - ./storage/d-baze:/var/www/html/d-baze:ro
     depends_on:
       - ksadb
-
-volumes:
-  shortcache:
-    driver: local
