@@ -2,3 +2,4 @@ database/
 projects/
 storage/
 .env
+cf_ssl/

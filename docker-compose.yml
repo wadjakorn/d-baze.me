@@ -11,6 +11,7 @@ services:
     volumes:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
+      - ./cf_ssl:/etc/ssl
 
   db:
     image: mysql:8.0
