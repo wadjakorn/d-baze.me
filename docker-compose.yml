@@ -32,7 +32,7 @@ services:
       database__connection__user: root
       database__connection__password:
       database__connection__database: ghost
-      url: http://${DOMAIN}
+      url: https://${DOMAIN}
 
   # ksadb:
   #   image: mariadb:10.7
