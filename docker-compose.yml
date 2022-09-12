@@ -1,8 +1,7 @@
 version: '3.5'
 services:
-  nginxdb:
+  nginx:
     image: nginx:alpine
-    container_name: nginxdb
     restart: always
     environment:
       - TZ=Asia/Bangkok
@@ -13,38 +12,60 @@ services:
       - ./config/:/etc/nginx/conf.d/
       - ./site:/var/www/html:ro
 
-  ksadb:
-    image: mariadb:10.7
-    container_name: ksadb
+  db:
+    image: mysql:8.0
     restart: always
-    environment:
-      - TZ=Asia/Bangkok
-      - MYSQL_DATABASE=ksadb
-      - MYSQL_ROOT_PASSWORD=aa111111
-    command:
-      - '--character-set-server=utf8mb4'
-      - '--collation-server=utf8mb4_unicode_ci'
     ports:
-      - '3306:3306'
-    volumes:
-      - './database:/var/lib/mysql'
-      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - 0.0.0.0:3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
-  ksawp:
-    image: wordpress:latest
-    container_name: ksawp
+  ghost:
+    image: ghost:5-alpine
     restart: always
-    environment:
-      - TZ=Asia/Bangkok
-      - WORDPRESS_DB_HOST=ksadb:3306
-      - WORDPRESS_DB_USER=root
-      - WORDPRESS_DB_NAME=ksadb
-      - WORDPRESS_DB_PASSWORD=aa111111
     ports:
-      - '8080:80'
-      - '8443:443'
-    volumes:
-      - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
-      - ./storage/ksawp:/var/www/html
-    depends_on:
-      - ksadb
+      - 0.0.0.0:2368:2368
+    environment:
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password:
+      database__connection__database: ghost
+      url: http://${DOMAIN}
+
+  # ksadb:
+  #   image: mariadb:10.7
+  #   container_name: ksadb
+  #   restart: always
+  #   environment:
+  #     - TZ=Asia/Bangkok
+  #     - MYSQL_DATABASE=ksadb
+  #     - MYSQL_ROOT_PASSWORD=aa111111
+  #   command:
+  #     - '--character-set-server=utf8mb4'
+  #     - '--collation-server=utf8mb4_unicode_ci'
+  #   ports:
+  #     - '3306:3306'
+  #   volumes:
+  #     - './database:/var/lib/mysql'
+  #     - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+
+  # ksawp:
+  #   image: wordpress:latest
+  #   container_name: ksawp
+  #   restart: always
+  #   environment:
+  #     - TZ=Asia/Bangkok
+  #     - WORDPRESS_DB_HOST=ksadb:3306
+  #     - WORDPRESS_DB_USER=root
+  #     - WORDPRESS_DB_NAME=ksadb
+  #     - WORDPRESS_DB_PASSWORD=aa111111
+  #   ports:
+  #     - '8080:80'
+  #     - '8443:443'
+  #   volumes:
+  #     - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+  #     - ./storage/ksawp:/var/www/html
+  #   depends_on:
+  #     - ksadb
