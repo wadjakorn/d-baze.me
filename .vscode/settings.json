@@ -13,5 +13,6 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     "**/node_modules": true
-  }
+  },
+  "dotenv.enableAutocloaking": false
 }
