@@ -31,7 +31,7 @@ services:
     ports:
       - 0.0.0.0:2368:2368
     volumes:
-      - ./ghost:/var/lib/ghost/content
+      - ./content:/var/lib/ghost/content
     environment:
       database__client: mysql
       database__connection__host: db
