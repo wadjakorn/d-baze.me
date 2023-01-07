@@ -36,6 +36,10 @@ services:
       database__connection__password:
       database__connection__database: ghost
       url: https://${DOMAIN}
+  iv-pb-api:
+      build: involve-postback-api/.
+      ports:
+        - "3000:3000"
 
   # ksadb:
   #   image: mariadb:10.7
