@@ -1,4 +1,4 @@
-d-baze.local {
+d-baze.me d-baze.local {
 	root * /usr/share/caddy/d-baze.me
 	file_server
 }
