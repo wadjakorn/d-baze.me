@@ -1,4 +1,4 @@
-d-baze.me d-baze.local {
+d-baze.me d-baze.local wadjakorn.me wadjakorn.local {
 	root * /usr/share/caddy/d-baze.me
 	file_server
 }
@@ -13,7 +13,7 @@ blog.d-baze.me blog.d-baze.local {
     reverse_proxy ghost:2368
 }
 
-l.tea2.one l.tea2.local shlink.local {
+l.tea2.one l.tea2.local {
     reverse_proxy shlink:8080
 }
 
