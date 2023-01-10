@@ -1,25 +1,34 @@
 version: '3.1'
 services:
-  nginx:
-    image: nginx:alpine
-    restart: always
-    environment:
-      - TZ=Asia/Bangkok
-    ports:
-      - '80:80'
-      - '443:443'
+  # server:
+  #   image: nginx:alpine
+  #   restart: always
+  #   environment:
+  #     - TZ=Asia/Bangkok
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   volumes:
+  #     - ./nginx/config/:/etc/nginx/conf.d/
+  #     - ./site:/var/www/html:ro
+  #     - ./cf_ssl:/etc/ssl
+
+  server:
+    image: caddy:latest
     volumes:
-      - ./config/:/etc/nginx/conf.d/
-      - ./site:/var/www/html:ro
-      - ./cf_ssl:/etc/ssl
-    depends_on:
-      - ghost
+      - "./caddy/Caddyfile:/etc/caddy/Caddyfile"
+      - "./site:/usr/share/caddy"
+      - "./caddy/caddy_data:/data"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
 
   db:
     image: mysql:8.0
     restart: always
     ports:
-      - 0.0.0.0:3306:3306
+      - 3306:3306
     volumes:
       - ./db:/var/lib/mysql
     environment:
@@ -29,7 +38,7 @@ services:
     image: ghost:5-alpine
     restart: always
     ports:
-      - 0.0.0.0:2368:2368
+      - 2368:2368
     volumes:
       - ./content:/var/lib/ghost/content
     environment:
@@ -41,44 +50,29 @@ services:
       url: ${DOMAIN}
     depends_on:
       - db
+      - server
 
   iv-pb-api:
-      build: involve-postback-api/.
-      ports:
-        - "0.0.0.0:3000:3000"
+    build: involve-postback-api/.
+    restart: always
+    ports:
+      - "0.0.0.0:3000:3000"
 
-  # ksadb:
-  #   image: mariadb:10.7
-  #   container_name: ksadb
-  #   restart: always
-  #   environment:
-  #     - TZ=Asia/Bangkok
-  #     - MYSQL_DATABASE=ksadb
-  #     - MYSQL_ROOT_PASSWORD=aa111111
-  #   command:
-  #     - '--character-set-server=utf8mb4'
-  #     - '--collation-server=utf8mb4_unicode_ci'
-  #   ports:
-  #     - '3306:3306'
-  #   volumes:
-  #     - './database:/var/lib/mysql'
-  #     - './init.sql:/docker-entrypoint-initdb.d/init.sql'
-
-  # ksawp:
-  #   image: wordpress:latest
-  #   container_name: ksawp
-  #   restart: always
-  #   environment:
-  #     - TZ=Asia/Bangkok
-  #     - WORDPRESS_DB_HOST=ksadb:3306
-  #     - WORDPRESS_DB_USER=root
-  #     - WORDPRESS_DB_NAME=ksadb
-  #     - WORDPRESS_DB_PASSWORD=aa111111
-  #   ports:
-  #     - '8080:80'
-  #     - '8443:443'
-  #   volumes:
-  #     - ./php/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
-  #     - ./storage/ksawp:/var/www/html
-  #   depends_on:
-  #     - ksadb
+  shlink:
+    image: shlinkio/shlink:stable
+    restart: always
+    environment:
+      - TZ="Asia/Bangkok"
+      - DEFAULT_DOMAIN= ${SHLINK_DOMAIN}
+      - IS_HTTPS_ENABLED=true
+      # - GEOLITE_LICENSE_KEY=<GEOLITE_LICENSE_KEY>
+      - DB_DRIVER=mysql
+      - DB_USER=root
+      - DB_NAME=shlink
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=3306
+    depends_on:
+      - db
+    ports:
+      - "0.0.0.0:8080:8080"

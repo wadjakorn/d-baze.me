@@ -1,0 +1,23 @@
+d-baze.local {
+	root * /usr/share/caddy
+	file_server
+}
+
+# โคกสะอาดการเกษตร.com
+xn--12caaj5fi0hc6cf7a9a1ac5sva.com www.xn--12caaj5fi0hc6cf7a9a1ac5sva.com ksa.local {
+    root * /usr/share/caddy/ksa
+	file_server
+}
+
+blog.d-baze.me blog.d-baze.local {
+    reverse_proxy ghost:2368
+}
+
+l.tea2.one l.tea2.local shlink.local {
+    reverse_proxy shlink:8080
+}
+
+iv.tea2.one iv.tea2.local {
+    reverse_proxy iv-pb-api:3000
+}
+
